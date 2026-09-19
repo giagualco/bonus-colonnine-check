@@ -1,0 +1,125 @@
+{
+  "_nota": "Fonte di verità documentale, non runtime. I valori sono replicati dentro index.html (blocco COSTANTI in _build/app.js) perché la pagina deve restare un file unico e funzionante offline: quando si aggiorna questo file va aggiornata anche la pagina e rilanciato _build/costruisci.py. Vale la stessa regola dei due calcolatori precedenti.",
+  "_aggiornato": "2026-09-17",
+  "_ricerca": "YOUTUBE/RESEARCH_BONUS_COLONNINE_2026-09-15.md · NotebookLM «Bonus colonnine domestiche 2026-2030 (DPCM 10.06.2026)» id c96d6af2-225f-4725-99f7-3e5533cd46f1",
+
+  "contributo": {
+    "percentuale": 80,
+    "tetto_persona_fisica_eur": 1500,
+    "tetto_parti_comuni_condominiali_eur": 8000,
+    "base": "prezzo di acquisto e posa in opera dell'infrastruttura di ricarica",
+    "nota_tetto_condominio": "Il massimale di 8.000 € è riferito all'intervento sulle parti comuni (artt. 1117 e 1117-bis c.c.), non al singolo dispositivo.",
+    "fonte": "DPCM 10 giugno 2026 art. 6 c. 1; DD MIMIT 4 agosto 2026 art. 2 c. 1-2",
+    "data_fonte": "2026-08-04"
+  },
+
+  "soggetti": {
+    "ammessi": ["persone fisiche residenti in Italia", "condomìni, tramite amministratore pro tempore o condomino delegato nei condomìni fino a 8 partecipanti"],
+    "esclusi": ["ditte individuali", "società", "pubbliche amministrazioni"],
+    "una_domanda_per_soggetto": "Seconda domanda ammessa solo se la prima è dichiarata improcedibile; alla seconda improcedibilità l'accesso è precluso.",
+    "fonte": "DPCM 10/06/2026 art. 6 c. 1; DD 4/08/2026 art. 1 e art. 6 c. 4-5 e c. 7 lett. b"
+  },
+
+  "finestra_spese": {
+    "dal": "2026-06-26",
+    "al": "2030-03-31",
+    "annualita_2026": { "completamento_dal": "2026-06-26", "completamento_al": "2026-12-31" },
+    "criterio": "Conta la data di completamento dell'installazione, non quella dell'acquisto. Acquisto in un anno e installazione l'anno dopo → il contributo va sull'anno dell'installazione.",
+    "fonte": "DD 4/08/2026 art. 3 c. 1; DD 11/09/2026 (sportello) art. 1 c. 1"
+  },
+
+  "sportello_2026": {
+    "apertura": "2026-09-22T12:00:00+02:00",
+    "chiusura": "2027-01-31T12:00:00+01:00",
+    "chiusura_anticipata": "possibile, per esaurimento delle risorse",
+    "istruttoria": "ordine cronologico di presentazione",
+    "dotazione_eur": 15000000,
+    "dotazione_composizione": "10 M€ residui 2025 + 5 M€ competenza 2026",
+    "dotazioni_successive_eur": { "2027": 15000000, "2028": 15000000, "2029": 15000000, "2030": 8000000 },
+    "finestra_2030": "1/1–31/3/2030",
+    "erogazione": "unica soluzione, decreto cumulativo, entro 90 giorni dal termine di presentazione delle domande",
+    "erogazione_giorni": 90,
+    "fonte": "DD 11/09/2026 (apertura e chiusura sportello) art. 1-3; DD 4/08/2026 art. 7"
+  },
+
+  "benchmark_2024": {
+    "dotazione_eur": 20000000,
+    "domande_primo_mese": 5319,
+    "importo_richiesto_primo_mese_eur": 6310000,
+    "ticket_medio_eur": 1187,
+    "uso": "Unico dato storico pubblico. La stima di tenuta del fondo 2026 (15 M€ / 1.187 € ≈ 12.600 domande; al ritmo 2024 ≈ 2,4 mesi) è un'ELABORAZIONE PROPRIA, dichiarata come tale in pagina.",
+    "fonte": "comunicato MIMIT sull'edizione 2024"
+  },
+
+  "domande_arrivate_2026": {
+    "valore": null,
+    "al": null,
+    "nota": "Nessun dato ufficiale finché MIMIT o Invitalia non lo pubblicano. Quando esce: aggiornare qui (valore e data), poi DOMANDE_ARRIVATE e DOMANDE_ARRIVATE_AL in _build/app.js e rilanciare costruisci.py. È la manutenzione ricorrente che Luca si è impegnato a fare (decisione del 17/09/2026)."
+  },
+
+  "requisiti_dispositivo": {
+    "nuovo_di_fabbrica": true,
+    "potenza": "«standard» — i decreti non danno una soglia in kW (verificato sul notebook il 17/09/2026); la pagina non ne inventa una",
+    "installazione": "in Italia, in area nella piena disponibilità del beneficiario, uso esclusivamente privato non accessibile al pubblico (nel condominio: uso collettivo dei condòmini)",
+    "dichiarazione_conformita": "art. 7 DM 37/2008, rilasciata dall'installatore abilitato, attesta l'avvenuta installazione",
+    "annualita_2026": "requisiti minimi art. 4 delibera ARERA 541/2020/R/eel E presenza nell'elenco GSE vigente alla data della domanda",
+    "annualita_2027_2030": "attestazione dell'installatore sui requisiti tecnici, allegata alla dichiarazione di conformità, su modello da definire",
+    "fonte": "DD 4/08/2026 art. 4"
+  },
+
+  "elenco_gse": {
+    "versione": "Maggio 2026",
+    "costruttori": 37,
+    "modelli_distinti": 97,
+    "versioni": 224,
+    "di_cui_senza_gdc": { "costruttori": 2, "modelli": 5 },
+    "file": "dispositivi_gse.json (estratto con _build/estrai_gse.py dai due PDF ufficiali il 2026-09-17)",
+    "avvertenza_gse": "I dati riportati sono indicativi: fanno fede le schede tecniche del costruttore",
+    "correzione": "Il dossier del 15/09 diceva «39 costruttori e ~186 modelli»: il conteggio sui PDF dà 37 / 97 / 224.",
+    "pagina": "https://www.gse.it/servizi-per-te/rinnovabili-per-i-trasporti/agevolazioni-per-la-ricarica-dei-veicoli-elettrici/elenco-dispositivi"
+  },
+
+  "spese": {
+    "ammesse": ["acquisto e messa in opera dell'infrastruttura", "impianti elettrici e opere edili strettamente necessarie", "dispositivi di monitoraggio, controllo e gestione anche separati", "progettazione, direzione lavori, sicurezza, collaudi", "connessione alla rete con attivazione di un nuovo POD"],
+    "escluse": ["imposte, tasse, oneri", "consulenze diverse da quelle sopra", "terreni e immobili", "beni e servizi diversi anche se funzionali", "autorizzazioni edilizie", "costi di costruzione e di esercizio"],
+    "pagamento": "solo bonifico, SEPA Credit Transfer o carta intestata al beneficiario, da conto intestato al richiedente; vietati contanti e finanziamento",
+    "fonte": "DD 4/08/2026 art. 3; art. 6 c. 7 lett. e"
+  },
+
+  "cumulo": {
+    "regola": "non cumulabile con altre agevolazioni, anche fiscali, nazionali, regionali o UE, sulla medesima spesa; doppio beneficio → revoca totale o parziale",
+    "fonte": "DD 4/08/2026 art. 2 c. 3"
+  },
+
+  "detrazione_di_confronto": {
+    "aliquota_prima_casa": 50,
+    "aliquota_altre": 36,
+    "rate_annuali": 10,
+    "avvertenza": "È solo un termine di confronto per mostrare che i due benefici non si sommano. La pagina NON afferma che la wallbox rientri in quella detrazione: quella specifica per le colonnine (art. 16-ter DL 63/2013) è scaduta il 31/12/2021.",
+    "fonte": "L. 199/2025 (aliquote 2026); dal 2027 scendono a 36/30%"
+  },
+
+  "allegati": {
+    "a_pena_di_improcedibilita": ["documento d'identità e codice fiscale", "per i condomìni: CF condominio, documento e dichiarazione ex art. 71-bis disp. att. c.c. dell'amministratore", "per i condomìni: delibera assembleare + dichiarazione di mancata impugnazione ex art. 1137 c.c.", "fatture elettroniche XML dal portale AdE (cartacee solo per fornitori esonerati, con prova)", "estratti conto o lista movimenti timbrata e firmata", "dichiarazione di conformità ex art. 7 DM 37/2008", "IBAN intestato al beneficiario", "PEC attiva per tutta la durata del procedimento"],
+    "accesso": "piattaforma Invitalia, SPID / CIE / CNS",
+    "relazione_finale": "Le FAQ Invitalia la chiedono «a pena di inammissibilità» con modulo in «Presenta la domanda»; NON compare in nessuno dei tre decreti 2026 (verificato con interrogazione grounded sul notebook). In checklist con questa avvertenza. Da verificare sulla piattaforma il 22/09/2026.",
+    "fonte": "DD 4/08/2026 art. 6 c. 6-7; FAQ Invitalia sez. B"
+  },
+
+  "controlli": {
+    "campione_percento": 10,
+    "campione_massimo_percento": 20,
+    "giorni_integrazione": 10,
+    "esito_entro_giorni": 90,
+    "restituzione_entro_giorni": 60,
+    "fonte": "DD 11/09/2026 (controlli) art. 2-4"
+  },
+
+  "riferimenti": {
+    "invitalia": "https://www.invitalia.it/incentivi-e-strumenti/bonus-colonnine-domestiche",
+    "mimit": "https://www.mimit.gov.it/it/incentivi/bonus-colonnine-domestiche",
+    "manuale_piattaforma": "https://manuali.invitalia.it/bcd26/",
+    "numero_verde": "800 77 53 97",
+    "pec_invitalia": "CRE3@postacert.invitalia.it"
+  }
+}
