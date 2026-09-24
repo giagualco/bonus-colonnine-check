@@ -66,9 +66,9 @@ var CAMPIONE=10, RESTITUZIONE_GIORNI=60;
    vedere che i due benefici non si sommano e che cosa si perde scegliendo l'uno. */
 var DETRAZIONE={prima:50, altre:36}, RATE=10;
 
-/* Elenco GSE dei dispositivi idonei (delibera ARERA 541/2020), versione Maggio 2026:
-   37 costruttori, 97 modelli, 224 versioni. Dati incorporati in fondo a questo file
-   (variabile GSE), estratti dai due PDF il 17/09/2026 con lo script in _build/. */
+/* Elenco GSE dei dispositivi idonei (delibera ARERA 541/2020), versione Settembre 2026:
+   45 costruttori, 129 modelli, 302 versioni. Dati incorporati in fondo a questo file
+   (variabile GSE), estratti dai due PDF il 24/09/2026 con lo script in _build/. */
 var GSE_VERSIONE="Maggio 2026";
 
 var S={
@@ -252,7 +252,8 @@ var idx=0;
 var ALIAS={"ENEL X WAY S.R.L.":"enel x juicebox juice box","ZUCCHETTI CENTRO SISTEMI - ZCS":"zcs azzurro","BTICINO":"legrand",
   "FREE2MOVE ESOLUTIONS":"stellantis free2move","SCHNEIDER ELECTRIC":"schneider","DAZETECHNOLOGY SRL":"daze","QUERCIA SRL":"quercia",
   "DIELECTRIK S.R.L.":"dielectrik","DKC EUROPE S.R.L.":"dkc","DETAS S.P.A.":"detas","SIGENERGY TECHNOLOGY B.V.":"sigenergy sigen",
-  "CABUR SRL":"cabur","GO-E":"goe go e","FOXESS":"fox ess","ALPHAMOBILITY":"alpha mobility","MYENERGI":"my energi"};
+  "CABUR SRL":"cabur","GO-E":"goe go e","FOXESS":"fox ess","ALPHAMOBILITY":"alpha mobility","MYENERGI":"my energi",
+  "ENFHASE ENERGY":"enphase","E-STATION":"estation e station","EVSTORE SRL":"ev store","EMOTION":"e motion","ENERGY S.P.A.":"energy spa zeroco2"};
 function piatto(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim(); }
 var GSE_IDX=null;
 function indiceGse(){
@@ -625,7 +626,7 @@ function disegnaEsito(soloRicalcolo){
    'Non dice se il contributo arriverà: quello lo decide lo sportello, in ordine di arrivo, finché ci sono i soldi. Tutte le costanti hanno una fonte e stanno scritte qui sopra; il codice è aperto.</p>'+
    '<p><strong>Chi c\'è dietro.</strong> Gianluca Gualco. Il canale è mio e lo strumento è del canale. Non vendo colonnine, non le installo e non faccio domande per conto terzi: in questa pagina non c\'è niente da comprare e nessuno da contattare.</p>'+
    '<p><strong>Questa pagina non raccoglie niente.</strong> Nessuna mail, nessun modulo, nessun tracciamento, nessun cookie. Non parla mai con la rete: l\'elenco del GSE è dentro il file, e funziona anche senza internet.</p>'+
-   '<p><strong>Ha una data.</strong> L\'elenco GSE incorporato è quello di '+GSE_VERSIONE+'; alla domanda vale quello vigente quel giorno. Le FAQ di Invitalia chiedono anche una «relazione finale» che nei decreti 2026 non compare: nella checklist c\'è, con questa avvertenza. Le pagine ufficiali: <a href="'+INVITALIA+'" target="_blank" rel="noopener">Invitalia</a> · <a href="'+MANUALE+'" target="_blank" rel="noopener">manuale della piattaforma</a> · <a href="'+GSE_PAGINA+'" target="_blank" rel="noopener">elenco GSE</a>.</p></footer>';
+   '<p><strong>Ha una data.</strong> L\'elenco GSE incorporato è quello di '+GSE_VERSIONE+'; alla domanda vale quello vigente quel giorno. La «relazione finale» citata nelle FAQ di Invitalia non compare né nei decreti 2026 né nella guida alla compilazione della piattaforma (verificato il 24/09/2026): nella checklist non c\'è. Le pagine ufficiali: <a href="'+INVITALIA+'" target="_blank" rel="noopener">Invitalia</a> · <a href="'+MANUALE+'" target="_blank" rel="noopener">manuale della piattaforma</a> · <a href="'+GSE_PAGINA+'" target="_blank" rel="noopener">elenco GSE</a>.</p></footer>';
 
   document.getElementById("palco").innerHTML='<div id="esito-sopra">'+h+'</div>'+hIp+hSotto;
 
@@ -679,8 +680,9 @@ function disegnaEsito(soloRicalcolo){
 /* ==================== IL FOGLIO DA PORTARSI VIA ==================== */
 function riga(a,b){ return '<tr><td>'+a+'</td><td>'+b+'</td></tr>'; }
 
-/* Gli allegati, come li elenca l'art. 6 c. 7 del DD 4/08/2026, più la relazione
-   finale che chiedono le FAQ di Invitalia (e che nei decreti non c'è). */
+/* Gli allegati, come li elenca l'art. 6 c. 7 del DD 4/08/2026, più l'attestazione dei
+   requisiti che la guida alla compilazione di Invitalia fa allegare in «Altra documentazione».
+   La «relazione finale» delle FAQ non compare né nei decreti né nella piattaforma (verificato il 24/09/2026). */
 function documenti(){
   var c=condo(), D=[];
   D.push(["Documento d'identità e codice fiscale", c?"dell'amministratore (o del condomino delegato), in corso di validità.":"tuoi, in corso di validità.","art. 6 c. 7 lett. a"]);
@@ -694,7 +696,7 @@ function documenti(){
   if(!annualita2026()) D.push(["Attestazione dell'installatore sui requisiti tecnici","per le annualità dal 2027: allegata alla dichiarazione di conformità, su modello che il Ministero definirà con un provvedimento apposta.","art. 4 c. 1 lett. e"]);
   D.push(["IBAN","di un conto intestato "+(c?"al condominio":"a chi chiede")+": è dove arriva il contributo, in una sola volta.","art. 6 c. 7 lett. g"]);
   D.push(["PEC","attiva e da tenere attiva per tutta la durata del procedimento: le richieste di integrazione arrivano lì e hai dieci giorni per rispondere.","art. 6 c. 7 lett. h"]);
-  D.push(["Relazione finale dell'investimento","modulo che le FAQ di Invitalia chiedono «a pena di inammissibilità», con i riferimenti delle spese, da scaricare dalla sezione «Presenta la domanda». ⚠ Nei tre decreti del 2026 questo documento non compare: potrebbe essere un residuo dell'edizione 2024. Se la piattaforma lo chiede, compilalo; se non lo chiede, non inventarlo.","FAQ Invitalia, sez. B"]);
+  if(annualita2026()) D.push(["Attestazione dei requisiti dell'infrastruttura di ricarica","il modulo si scarica dalla sezione «Presenta la domanda» della piattaforma e si allega in «Altra documentazione». La guida di Invitalia lo segna come facoltativo, ma è il foglio con cui l'installatore dichiara che la colonnina rispetta i requisiti: fattelo compilare e allegalo. La «relazione finale» che citavano le FAQ, invece, nella piattaforma non c'è.","Guida alla compilazione Invitalia, verificata il 24/09/2026"]);
   D.push(["SPID, CIE o CNS","per entrare sulla piattaforma di Invitalia, all'indirizzo indicato nell'avviso di apertura.","art. 6 c. 6"]);
   return D;
 }
