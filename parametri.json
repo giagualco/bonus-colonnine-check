@@ -68,14 +68,15 @@
   },
 
   "elenco_gse": {
-    "versione": "Maggio 2026",
-    "costruttori": 37,
-    "modelli_distinti": 97,
-    "versioni": 224,
-    "di_cui_senza_gdc": { "costruttori": 2, "modelli": 5 },
-    "file": "dispositivi_gse.json (estratto con _build/estrai_gse.py dai due PDF ufficiali il 2026-09-17)",
+    "versione": "Settembre 2026",
+    "costruttori": 45,
+    "modelli_distinti": 129,
+    "versioni": 302,
+    "di_cui_senza_gdc": { "costruttori": 3, "modelli": 7, "nota": "Emotion E-Wall Go e E-Wall Smart stanno in entrambi gli elenchi: versione DLB con GDC, STD senza" },
+    "file": "dispositivi_gse.json (estratto con _build/estrai_gse.py dai due PDF ufficiali il 2026-09-24)",
     "avvertenza_gse": "I dati riportati sono indicativi: fanno fede le schede tecniche del costruttore",
     "correzione": "Il dossier del 15/09 diceva «39 costruttori e ~186 modelli»: il conteggio sui PDF dà 37 / 97 / 224.",
+    "aggiornamento_2026_09_24": "Elenco Settembre 2026: da 37/97/224 a 45/129/302. Entrano 8 costruttori (E-Station, Emotion, Energy S.p.A., Enphase — scritto «ENFHASE» dal GSE —, EVStore, Fronius, Huawei, Rheidon Tech) e 32 modelli; nessun modello uscito, due versioni solo rinominate.",
     "pagina": "https://www.gse.it/servizi-per-te/rinnovabili-per-i-trasporti/agevolazioni-per-la-ricarica-dei-veicoli-elettrici/elenco-dispositivi"
   },
 
@@ -102,7 +103,8 @@
   "allegati": {
     "a_pena_di_improcedibilita": ["documento d'identità e codice fiscale", "per i condomìni: CF condominio, documento e dichiarazione ex art. 71-bis disp. att. c.c. dell'amministratore", "per i condomìni: delibera assembleare + dichiarazione di mancata impugnazione ex art. 1137 c.c.", "fatture elettroniche XML dal portale AdE (cartacee solo per fornitori esonerati, con prova)", "estratti conto o lista movimenti timbrata e firmata", "dichiarazione di conformità ex art. 7 DM 37/2008", "IBAN intestato al beneficiario", "PEC attiva per tutta la durata del procedimento"],
     "accesso": "piattaforma Invitalia, SPID / CIE / CNS",
-    "relazione_finale": "Le FAQ Invitalia la chiedono «a pena di inammissibilità» con modulo in «Presenta la domanda»; NON compare in nessuno dei tre decreti 2026 (verificato con interrogazione grounded sul notebook). In checklist con questa avvertenza. Da verificare sulla piattaforma il 22/09/2026.",
+    "relazione_finale": "Le FAQ Invitalia la chiedono «a pena di inammissibilità», ma NON compare nei tre decreti 2026 né nella guida alla compilazione della piattaforma (manuali.invitalia.it/bcd26, «Documenti necessari», verificato il 24/09/2026). Tolta dalla checklist.",
+    "attestazione_requisiti": "La guida alla compilazione fa scaricare l'«Attestazione dei requisiti dell'infrastruttura di ricarica» dalla sezione Presenta la domanda e allegarla in «Altra documentazione» (facoltativo). Obbligatori per persona fisica: format di domanda, codice fiscale, documento d'identità, estratti conto, certificazione di conformità; fatture elettroniche (anche xml) se pertinenti; per il condominio anche la delibera. Verificato il 24/09/2026.",
     "fonte": "DD 4/08/2026 art. 6 c. 6-7; FAQ Invitalia sez. B"
   },
 

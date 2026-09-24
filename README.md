@@ -45,12 +45,12 @@ Tutte le costanti stanno in [`parametri.json`](parametri.json) con fonte e data.
 - **DD MIMIT 4 agosto 2026**: soggetti, spese, requisiti del dispositivo, allegati, cumulo, una domanda per soggetto
 - **DD MIMIT 11 settembre 2026 (sportello)**: dalle 12:00 del 22/09/2026 alle 12:00 del 31/01/2027, 15 M€, ordine cronologico
 - **DD MIMIT 11 settembre 2026 (controlli)**: campione del 10%, dieci giorni per integrare, restituzione entro 60
-- **Elenco GSE** dei dispositivi idonei (delibera ARERA 541/2020), versione **Maggio 2026**: 37 costruttori, 97 modelli, 224 versioni
+- **Elenco GSE** dei dispositivi idonei (delibera ARERA 541/2020), versione **Settembre 2026**: 45 costruttori, 129 modelli, 302 versioni
 - **Comunicato MIMIT sull'edizione 2024**: 5.319 domande nel primo mese, ticket medio 1.187 € — l'unico dato storico; la stima di tenuta del fondo è un'elaborazione propria e la pagina lo dice
 
 Due cose che la pagina dichiara invece di inventare: i decreti non danno una soglia in kW per la
-«potenza standard», e non fissano un quorum per la delibera condominiale. E una che segnala: le FAQ
-di Invitalia chiedono una «relazione finale» che **nei decreti 2026 non compare**.
+«potenza standard», e non fissano un quorum per la delibera condominiale. E una che ha verificato: la «relazione finale» che citano le FAQ
+di Invitalia **non compare né nei decreti 2026 né nella piattaforma** (24/09/2026), e dalla checklist è uscita.
 
 ## Manutenzione
 
