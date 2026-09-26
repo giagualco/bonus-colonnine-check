@@ -5,7 +5,7 @@ calcolatore fotovoltaico e quello delle comunità energetiche.
 
 Rispondi a una quindicina di domande e ti dice se hai i requisiti del **Bonus colonnine domestiche
 2026** come li scrive il decreto, uno per uno, con l'articolo accanto; ti fa cercare la tua wallbox
-nell'**elenco del GSE**; fa il conto dell'80% con il tetto; ti dice perché lo sportello è **una corsa
+nell'**elenco del GSE**; fa il conto dell'80% **sull'imponibile, IVA esclusa**, con il tetto; ti dice perché lo sportello è **una corsa
 e non una scadenza**; e ti fa stampare la **checklist dei documenti** — o, se non hai ancora comprato,
 le sette cose da farti confermare per iscritto dall'installatore.
 
@@ -36,6 +36,12 @@ chiede, senza finanziamento · nessun cumulo · domande precedenti · SPID e PEC
 
 L'esito è **Dentro**, **Dentro con N cose da sistemare**, **Fuori** o **Non in questo sportello**
 (installazione nel 2027). Dove si esce, si esce col motivo scritto e con la via d'uscita, se c'è.
+
+## Correzioni
+
+- **26/09/2026 — il conto ora parte dall'imponibile, IVA esclusa.** Fino al 25/09 la pagina chiedeva la spesa IVA compresa e
+  sovrastimava il contributo. Il DD 4/08/2026, art. 3 c. 5 lett. a, esclude «le spese per imposte, tasse e oneri di qualsiasi
+  genere»: l'IVA resta tutta a carico di chi paga. Segnalato da uno spettatore sotto il video: grazie.
 
 ## Le fonti
 

@@ -268,6 +268,14 @@ var GSE_PDF_NOGDC="https://www.gse.it/servizi-per-te_site/rinnovabili-per-i-tras
    DPCM 10/06/2026 art. 6 c. 1; DD MIMIT 4/08/2026 art. 2 c. 1-2. */
 var PERC=80, TETTO_PRIVATO=1500, TETTO_CONDOMINIO=8000;
 
+/* Base del contributo: l'IMPONIBILE in fattura, IVA esclusa. Il DD 4/08/2026 art. 3 c. 5
+   lett. a esclude «le spese per imposte, tasse e oneri di qualsiasi genere», e l'IVA è
+   un'imposta: resta tutta a carico di chi paga. L'aliquota serve solo a mostrare il
+   totale della fattura; 22% è l'ordinaria, modificabile in fondo alla pagina.
+   Corretto il 26/09/2026 su segnalazione di uno spettatore: prima la pagina chiedeva
+   la spesa IVA compresa e sovrastimava il contributo. */
+var IVA=22;
+
 /* Finestra delle spese: dal 26/06/2026 (entrata in vigore del DPCM) al 31/03/2030.
    Per l'annualità 2026 contano le installazioni COMPLETATE fra il 26/06 e il 31/12/2026.
    Conta la data di completamento dell'installazione, non quella dell'acquisto.
@@ -319,7 +327,7 @@ var S={
   luogo:null, uso:null, nuovo:null, installatore:null,
   modello:null, modelloStato:null, /* "trovato" | "assente" | "nonscelto" */
   fattura:null, pagamento:null, cumulo:null, precedenti:null, strumenti:null,
-  spesa:1600, casa:"prima",
+  spesa:1600, casa:"prima", iva:IVA,
   /* parametri modificabili in fondo alla pagina */
   perc:PERC, tettoPriv:TETTO_PRIVATO, tettoCondo:TETTO_CONDOMINIO,
   detr:null, rate:RATE, ticket:TICKET_2024, dotazione:DOTAZIONE,
@@ -481,9 +489,9 @@ var PASSI=[
   aiuto:"Al bonus non importa. Serve solo per il confronto con la detrazione fiscale, che sulla prima casa vale il 50% e sulle altre il 36%.",
   opzioni:[{v:"prima",t:"Sì"},{v:"altre",t:"No, è una seconda casa"}]},
 
- {id:"spesa", tipo:"numero", campo:"spesa", unita:"€, IVA compresa", min:1, saltaSe:fuoriSubito,
-  titolo: function(){ return fatto() ? "Quanto hai speso in tutto, acquisto e posa?" : "Quanto pensi di spendere, acquisto e posa?"; },
-  aiuto:"Il contributo copre acquisto e <strong>posa in opera</strong>, comprese le opere elettriche ed edili strettamente necessarie, la progettazione, il collaudo e l'eventuale <strong>nuovo contatore</strong>. Restano fuori tasse, consulenze diverse e autorizzazioni edilizie."}
+ {id:"spesa", tipo:"numero", campo:"spesa", unita:"€, IVA esclusa", min:1, saltaSe:fuoriSubito,
+  titolo: function(){ return fatto() ? "Quanto è l'imponibile della fattura, acquisto e posa?" : "Quanto pensi di spendere, acquisto e posa, IVA esclusa?"; },
+  aiuto:"Scrivi l'<strong>imponibile</strong>, cioè la cifra <strong>senza IVA</strong>: l'80% si calcola su quella. Il decreto esclude «imposte, tasse e oneri di qualsiasi genere», e l'IVA è un'imposta, quindi la paghi tu per intero. Se hai solo il totale, dividilo per 1,22. Il contributo copre acquisto e <strong>posa in opera</strong>, comprese le opere elettriche ed edili strettamente necessarie, la progettazione, il collaudo e l'eventuale <strong>nuovo contatore</strong>."}
 ];
 function attivi(){return PASSI.filter(function(p){return !(p.saltaSe&&p.saltaSe())})}
 function val(x){ return typeof x==="function" ? x() : x; }
@@ -606,7 +614,7 @@ function disegnaPasso(){
     var convN=function(){
       S[p.campo]=Math.max(p.min||0,parseFloat(inpN.value)||0);
       var c=document.getElementById("conv");
-      if(p.id==="spesa") c.textContent="L'"+num(S.perc)+"% fa "+eur(S.spesa*S.perc/100)+(S.spesa*S.perc/100>tetto()?", ma il tetto è "+eur(tetto())+": il contributo si ferma lì.":". Sotto il tetto di "+eur(tetto())+".");
+      if(p.id==="spesa") c.textContent="Con l'IVA al "+num(S.iva)+"% la fattura fa "+eur(S.spesa*(1+S.iva/100))+". L'"+num(S.perc)+"% dell'imponibile fa "+eur(S.spesa*S.perc/100)+(S.spesa*S.perc/100>tetto()?", ma il tetto è "+eur(tetto())+": il contributo si ferma lì.":". Sotto il tetto di "+eur(tetto())+".");
       if(p.id==="partecipanti") c.textContent= S.partecipanti<=8 ? "Fino a otto partecipanti la domanda può presentarla anche un condomino delegato." : "Sopra gli otto partecipanti la domanda la presenta solo l'amministratore.";
     };
     inpN.addEventListener("input",convN); convN(); inpN.focus(); inpN.select();
@@ -731,13 +739,16 @@ function verdetto(L){
 
 /* ==================== IL CONTO ==================== */
 function conto(){
-  var spesa=Math.max(0,S.spesa||0);
+  var spesa=Math.max(0,S.spesa||0);          /* imponibile, IVA esclusa */
+  var iva=spesa*Math.max(0,S.iva||0)/100, totale=spesa+iva;
   var lordo=spesa*S.perc/100, contributo=Math.min(lordo,tetto());
-  var soglia=tetto()/(S.perc/100);           /* spesa oltre la quale il tetto morde */
-  var detr=spesa*aliqDetr()/100, rata=detr/S.rate;
-  return {spesa:spesa,lordo:lordo,contributo:contributo,tagliato:lordo>contributo,soglia:soglia,
-          resta:spesa-contributo,detr:detr,rata:rata,aTesta: condo()&&S.partecipanti>0 ? contributo/S.partecipanti : null,
-          spesaTesta: condo()&&S.partecipanti>0 ? spesa/S.partecipanti : null};
+  var soglia=tetto()/(S.perc/100);           /* imponibile oltre il quale il tetto morde */
+  /* la detrazione di confronto, per un privato, si calcola sul pagato IVA compresa */
+  var detr=totale*aliqDetr()/100, rata=detr/S.rate;
+  return {spesa:spesa,iva:iva,totale:totale,lordo:lordo,contributo:contributo,tagliato:lordo>contributo,soglia:soglia,
+          sogliaIvato:soglia*(1+Math.max(0,S.iva||0)/100),
+          resta:totale-contributo,detr:detr,rata:rata,aTesta: condo()&&S.partecipanti>0 ? contributo/S.partecipanti : null,
+          spesaTesta: condo()&&S.partecipanti>0 ? totale/S.partecipanti : null};
 }
 
 /* ==================== LA CORSA ==================== */
@@ -790,15 +801,17 @@ function bloccoSopra(){
   /* ---- il conto ---- */
   h+='<div class="carta" style="margin-top:2rem"><p class="occhiello">Il conto</p><h2>'+eur(K.contributo)+(condo()&&K.aTesta!==null?' al condominio, '+eur(K.aTesta)+' a famiglia':' di contributo')+'</h2>'+
     '<div class="scroll"><table><tr><th>Voce</th><th>Importo</th></tr>'+
-    '<tr><td>Spesa dichiarata, acquisto e posa</td><td class="val">'+eur(K.spesa)+'</td></tr>'+
-    '<tr><td>L\''+num(S.perc)+'%</td><td class="val">'+eur(K.lordo)+'</td></tr>'+
+    '<tr><td>Imponibile in fattura, acquisto e posa</td><td class="val">'+eur(K.spesa)+'</td></tr>'+
+    '<tr><td>IVA al '+num(S.iva)+'% — fuori dal contributo</td><td class="val">'+eur(K.iva)+'</td></tr>'+
+    '<tr><td>Totale della fattura</td><td class="val">'+eur(K.totale)+'</td></tr>'+
+    '<tr><td>L\''+num(S.perc)+'% dell\'imponibile</td><td class="val">'+eur(K.lordo)+'</td></tr>'+
     '<tr><td>Tetto '+(condo()?'per le parti comuni condominiali':'per persona fisica')+'</td><td class="val">'+eur(tetto())+'</td></tr>'+
     '<tr class="forte"><td>Contributo'+(K.tagliato?' (fermato dal tetto)':'')+'</td><td class="val">'+eur(K.contributo)+'</td></tr>'+
     '<tr><td>Resta a '+(condo()?'carico del condominio':'te')+'</td><td class="val">'+eur(K.resta)+(condo()&&K.spesaTesta!==null?' <span class="nota">('+eur(K.resta/S.partecipanti)+' a famiglia)</span>':'')+'</td></tr>'+
     '</table></div>';
   h+='<p>'+(K.tagliato
-    ? '<strong>Il tetto morde.</strong> Sopra i '+eur(K.soglia)+' di spesa l\''+num(S.perc)+'% supera il massimale e il contributo si ferma a '+eur(tetto())+': ogni euro in più lo paghi tu per intero.'
-    : '<strong>Sei sotto il tetto</strong>: fino a '+eur(K.soglia)+' di spesa il contributo resta l\''+num(S.perc)+'% pieno.')+'</p>';
+    ? '<strong>Il tetto morde.</strong> Sopra i '+eur(K.soglia)+' di imponibile ('+eur(K.sogliaIvato)+' IVA compresa) l\''+num(S.perc)+'% supera il massimale e il contributo si ferma a '+eur(tetto())+': ogni euro in più lo paghi tu per intero.'
+    : '<strong>Sei sotto il tetto</strong>: fino a '+eur(K.soglia)+' di imponibile ('+eur(K.sogliaIvato)+' IVA compresa) il contributo resta l\''+num(S.perc)+'% pieno.')+' <span class="nota">L\'IVA non è mai coperta: il decreto esclude le imposte di qualsiasi genere (DD 4/08/2026 art. 3 c. 5 lett. a). Per questo, sul totale che paghi, il contributo non arriva mai all\''+num(S.perc)+'%.</span></p>';
   h+='<p><strong>Il confronto che nessuno fa.</strong> Il bonus non si somma a nessun\'altra agevolazione sulla stessa fattura. Se quella spesa potesse andare in una detrazione al '+num(aliqDetr())+'% in '+S.rate+' rate — <em>è un\'ipotesi per il confronto, non una promessa che ci rientri</em> — varrebbe '+eur(K.detr)+' in tutto, cioè '+eur(K.rata)+' l\'anno per '+S.rate+' anni, e solo se hai abbastanza IRPEF da scontare. '+
     (K.contributo>=K.detr ? 'Qui il contributo ('+eur(K.contributo)+', in una volta) vale di più.' : 'Qui la detrazione ('+eur(K.detr)+', ma in dieci anni) varrebbe di più sulla carta: il tetto ha già tagliato il contributo, e il confronto va fatto sulla tua situazione fiscale.')+'</p>';
   h+='<p><strong>Quando arrivano i soldi.</strong> L\'erogazione è in unica soluzione entro '+EROGA_GIORNI+' giorni dalla chiusura dello sportello, con un decreto cumulativo: chi fa domanda il 22 settembre non vede un euro prima della <b>primavera 2027</b> (chiusura il '+data(CHIUDE)+', più '+EROGA_GIORNI+' giorni: intorno al '+data(R.erogazione)+'). Se lo sportello chiude prima per esaurimento, i termini si accorciano di conseguenza.</p>';
@@ -841,7 +854,8 @@ function disegnaEsito(soloRicalcolo){
 
     /* ---- parametri ---- */
     hIp+='<div class="carta" style="margin-top:1.25rem"><p class="occhiello">Con che numeri ho fatto il conto</p><h2>Tutti modificabili, tutti con la fonte</h2><div class="griglia-ip">'+
-      ipCampo("perc","Percentuale del contributo (%)",S.perc,1,"DPCM 10/06/2026 art. 6 c. 1: 80%")+
+      ipCampo("perc","Percentuale del contributo (%)",S.perc,1,"DPCM 10/06/2026 art. 6 c. 1: 80% dell'imponibile")+
+      ipCampo("iva","Aliquota IVA in fattura (%)",S.iva,1,"22% ordinaria. L'IVA è esclusa dal contributo: DD 4/08/2026 art. 3 c. 5 lett. a")+
       ipCampo("tettopriv","Tetto per persona fisica (€)",S.tettoPriv,50,"DPCM 10/06/2026 art. 6 c. 1: 1.500 €")+
       ipCampo("tettocondo","Tetto per le parti comuni (€)",S.tettoCondo,100,"DPCM 10/06/2026 art. 6 c. 1: 8.000 €")+
       ipCampo("detr","Detrazione ipotetica di confronto (%)",aliqDetr(),1,"L. 199/2025: 50% prima casa, 36% altre, nel 2026. È solo un termine di confronto")+
@@ -872,7 +886,7 @@ function disegnaEsito(soloRicalcolo){
 
   document.getElementById("palco").innerHTML='<div id="esito-sopra">'+h+'</div>'+hIp+hSotto;
 
-  [["perc","perc"],["tettopriv","tettoPriv"],["tettocondo","tettoCondo"],["detr","detr"],["rate","rate"],["ticket","ticket"],["dotazione","dotazione"]].forEach(function(c){
+  [["perc","perc"],["iva","iva"],["tettopriv","tettoPriv"],["tettocondo","tettoCondo"],["detr","detr"],["rate","rate"],["ticket","ticket"],["dotazione","dotazione"]].forEach(function(c){
     var el=document.getElementById("ip-"+c[0]); if(!el) return;
     el.addEventListener("input",function(e){
       var v=parseFloat(e.target.value);
@@ -961,7 +975,7 @@ function costruisciReport(){
     riga("Chi chiede", c?"Il condominio ("+S.partecipanti+" partecipanti), tramite "+(S.ruolo==="delegato"?"condomino delegato":S.ruolo==="amministratore"?"l'amministratore":"l'amministratore (io sono un condomino)"):"Persona fisica residente in Italia")+
     riga("Stato dei lavori", f?"Installazione completata"+(S.quando==="2026"?" fra il 26/06 e il 31/12/2026":S.quando==="2027"?" nel 2027":" prima del 26/06/2026"):"Da completare "+(S.quando==="entro2026"?"entro il 31/12/2026":S.quando==="2027"?"nel 2027":"in data da decidere"))+
     (annualita2026()?riga("Modello", S.modelloStato==="trovato"?S.modello.costruttore+" "+S.modello.modello+" — nell'elenco GSE "+GSE_VERSIONE:S.modelloStato==="assente"?"non trovato nell'elenco GSE "+GSE_VERSIONE:"non ancora scelto"):"")+
-    riga("Spesa dichiarata", eur(K.spesa))+
+    riga("Imponibile dichiarato (IVA esclusa)", eur(K.spesa)+" — totale fattura con IVA al "+num(S.iva)+"%: "+eur(K.totale))+
     riga("Contributo atteso", eur(K.contributo)+(K.tagliato?" (fermato dal tetto di "+eur(tetto())+")":" ("+num(S.perc)+"%)")+(K.aTesta!==null?", "+eur(K.aTesta)+" a famiglia":""))+
     riga("Esito del controllo", V.titolo)+
     '</table>';

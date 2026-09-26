@@ -7,7 +7,9 @@
     "percentuale": 80,
     "tetto_persona_fisica_eur": 1500,
     "tetto_parti_comuni_condominiali_eur": 8000,
-    "base": "prezzo di acquisto e posa in opera dell'infrastruttura di ricarica",
+    "base": "imponibile (IVA esclusa) del prezzo di acquisto e posa in opera dell'infrastruttura di ricarica",
+    "iva": "esclusa dal contributo: DD 4/08/2026 art. 3 c. 5 lett. a, «non sono in ogni caso ammissibili [...] le spese per imposte, tasse e oneri di qualsiasi genere». Aliquota di default nel tool 22% (ordinaria), solo per mostrare il totale fattura. Corretto il 26/09/2026 su segnalazione di uno spettatore: fino al 25/09 il tool chiedeva la spesa IVA compresa e sovrastimava il contributo.",
+    "aliquota_iva_default": 22,
     "nota_tetto_condominio": "Il massimale di 8.000 € è riferito all'intervento sulle parti comuni (artt. 1117 e 1117-bis c.c.), non al singolo dispositivo.",
     "fonte": "DPCM 10 giugno 2026 art. 6 c. 1; DD MIMIT 4 agosto 2026 art. 2 c. 1-2",
     "data_fonte": "2026-08-04"
